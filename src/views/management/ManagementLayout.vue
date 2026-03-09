@@ -59,8 +59,27 @@
 
         <div class="sidebar-footer">
           <div class="time-box">
-             <Calendar :size="14" />
-             <span>{{ currentTime }}</span>
+            <Calendar :size="14" />
+            <span>{{ currentTime }}</span>
+          </div>
+
+          <div class="links-box">
+            <a
+              href="https://github.com/i-shl/earth-management-system"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-item"
+            >
+              源代码 · earth-management-system
+            </a>
+            <a
+              href="https://github.com/i-shl/neo-brutal-vue"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-item"
+            >
+              组件库 · neo-brutal-vue
+            </a>
           </div>
         </div>
       </aside>
@@ -340,7 +359,7 @@ onUnmounted(() => {
 .sidebar-footer {
   padding: 20px;
   border-top: 1px dashed var(--color-border-subtle);
-  
+
   .time-box {
     background: var(--color-surface-alt);
     padding: 8px 12px;
@@ -350,6 +369,27 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  .links-box {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .link-item {
+    font-size: 11px;
+    font-weight: 700;
+    color: $color-text-light;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      color: $color-primary;
+      transform: translateX(2px);
+      text-decoration: underline;
+    }
   }
 }
 
