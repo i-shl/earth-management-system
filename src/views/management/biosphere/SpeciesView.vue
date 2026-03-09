@@ -196,13 +196,13 @@ const habitatChart = ref<HTMLElement>()
 let charts: echarts.ECharts[] = []
 const handleResize = () => charts.forEach(c => c.resize())
 
-const newSpecies = ref({
+const newSpecies = ref<Partial<Species>>({
   name: '',
-  type: '',
-  status: '' as Species['status'],
+  type: 'mammal',
+  status: 'safe',
   population: 0,
-  trend: 'stable' as Species['trend'],
-  lastSighting: new Date().toISOString().split('T')[0]
+  trend: 'stable',
+  lastSighting: new Date().toISOString().split('T')[0],
 })
 
 // 选项数组
@@ -321,15 +321,24 @@ const exportReport = () => {
 const handleAddSpecies = () => {
   if (!newSpecies.value.name || !newSpecies.value.status) return
 
-  earthStore.addSpecies({ ...newSpecies.value })
+  earthStore.addSpecies({
+    name: newSpecies.value.name || '',
+    type: newSpecies.value.type || 'mammal',
+    status: newSpecies.value.status || 'safe',
+    population: newSpecies.value.population ?? 0,
+    trend: newSpecies.value.trend || 'stable',
+    lastSighting:
+      newSpecies.value.lastSighting ||
+      new Date().toISOString().split('T')[0],
+  })
   showAddDialog.value = false
   newSpecies.value = {
     name: '',
-    type: '',
-    status: '' as Species['status'],
+    type: 'mammal',
+    status: 'safe',
     population: 0,
     trend: 'stable',
-    lastSighting: new Date().toISOString().split('T')[0]
+    lastSighting: new Date().toISOString().split('T')[0],
   }
 }
 

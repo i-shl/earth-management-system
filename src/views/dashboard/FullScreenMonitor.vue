@@ -26,7 +26,11 @@
       <div class="header-right">
         <div class="control-group">
           <ThemeSwitcher />
-          <NeoButton @click="router.push({ name: 'Overview' })" class="brutal-exit-btn" variant="error">
+          <NeoButton
+            @click="router.push({ name: 'Overview' })"
+            class="brutal-exit-btn"
+            type="danger"
+          >
             <LogOut :size="18" />
             <span>退出监控</span>
           </NeoButton>
@@ -54,10 +58,8 @@ import { Globe, LogOut } from 'lucide-vue-next'
 import { NeoButton } from 'neo-brutal-vue'
 import DashboardMonitor from './DashboardMonitor.vue'
 import ThemeSwitcher from '../../components/common/ThemeSwitcher.vue'
-import { useEarthStore } from '../../stores/earthStore'
 
 const router = useRouter()
-const earthStore = useEarthStore()
 
 const currentTime = ref('')
 const uptime = ref('00:00:00')

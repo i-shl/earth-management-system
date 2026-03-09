@@ -204,16 +204,78 @@ const totalCountries = computed(() =>
 
 const continentStats = computed(() => {
   const continents = earthStore.continents
+
+  if (!continents.length) {
+    return [
+      {
+        icon: '🌍',
+        value: '0 km²',
+        label: '总陆地面积',
+        trend: '暂无数据',
+        trendClass: 'neutral',
+      },
+      {
+        icon: '👥',
+        value: '0',
+        label: '总人口',
+        trend: '暂无数据',
+        trendClass: 'neutral',
+      },
+      {
+        icon: '🌡️',
+        value: '0.0°C',
+        label: '平均气温',
+        trend: '暂无数据',
+        trendClass: 'neutral',
+      },
+      {
+        icon: '🏆',
+        value: '-',
+        label: '人口最多大洲',
+        trend: '0',
+        trendClass: 'neutral',
+      },
+    ]
+  }
+
   const totalArea = continents.reduce((sum, c) => sum + c.area, 0)
   const totalPop = continents.reduce((sum, c) => sum + c.population, 0)
-  const avgTemp = continents.reduce((sum, c) => sum + c.avgTemp, 0) / continents.length
-  const maxPopContinent = continents.reduce((max, c) => c.population > max.population ? c : max, continents[0])
+  const avgTemp =
+    continents.reduce((sum, c) => sum + c.avgTemp, 0) / continents.length
+  const maxPopContinent = continents.reduce<Continent>(
+    (max, c) => (c.population > max.population ? c : max),
+    continents[0] as Continent,
+  )
 
   return [
-    { icon: '🌍', value: formatNumber(totalArea) + ' km²', label: '总陆地面积', trend: '占地球29%', trendClass: 'neutral' },
-    { icon: '👥', value: formatNumber(totalPop), label: '总人口', trend: '+1.2% 年增长', trendClass: 'success' },
-    { icon: '🌡️', value: avgTemp.toFixed(1) + '°C', label: '平均气温', trend: '+0.8°C vs 1900', trendClass: 'warning' },
-    { icon: '🏆', value: maxPopContinent?.name || '-', label: '人口最多大洲', trend: formatNumber(maxPopContinent?.population || 0), trendClass: 'neutral' }
+    {
+      icon: '🌍',
+      value: formatNumber(totalArea) + ' km²',
+      label: '总陆地面积',
+      trend: '占地球29%',
+      trendClass: 'neutral',
+    },
+    {
+      icon: '👥',
+      value: formatNumber(totalPop),
+      label: '总人口',
+      trend: '+1.2% 年增长',
+      trendClass: 'success',
+    },
+    {
+      icon: '🌡️',
+      value: avgTemp.toFixed(1) + '°C',
+      label: '平均气温',
+      trend: '+0.8°C vs 1900',
+      trendClass: 'warning',
+    },
+    {
+      icon: '🏆',
+      value: maxPopContinent?.name || '-',
+      label: '人口最多大洲',
+      trend: formatNumber(maxPopContinent?.population || 0),
+      trendClass: 'neutral',
+    },
   ]
 })
 
